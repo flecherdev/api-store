@@ -4,7 +4,7 @@ const ProductsService = require('../../services/products');
 
 const productService = new ProductsService();
 
-router.get('/', async function(req, res){
+router.get('/', async function(req, res, next){
     const { tags } = req.query;
     console.log('req', req.query)
 
@@ -20,7 +20,7 @@ router.get('/', async function(req, res){
     }
 });
 
-router.get('/:id', async function(req, res){
+router.get('/:id', async function(req, res, next){
     const { id } = req.params;
     console.log('req', req.params)
     try {
@@ -35,7 +35,7 @@ router.get('/:id', async function(req, res){
     }
 });
 
-router.post('/', async function(req, res){
+router.post('/', async function(req, res, next){
     // npm i -S body-parser  
     const { body: product } = req;
     console.log('req', req.body)
@@ -51,13 +51,16 @@ router.post('/', async function(req, res){
     }
 });
 
-router.put('/:id', async function(req, res){
+router.put('/:id', async function(req, res, next){
     const { id } = req.params;
     const { body: product } = req;
     console.log('req', req.params, req.body)
 
     try {
-        const updateProduct = await productService.updateProduct({ id });
+        const updateProduct = await productService.updateProduct({ 
+            id,
+            product
+        });
     
         res.status(200).json({
             data: updateProduct,
@@ -68,7 +71,7 @@ router.put('/:id', async function(req, res){
     }
 });
 
-router.delete('/:id', async function(req, res){
+router.delete('/:id', async function(req, res, next){
     const { id } = req.params;
     console.log('req', req.params, req.body)
     try {
