@@ -11,10 +11,11 @@ router.get('/', async function(req, res, next){
     try {
         const products = await productService.getProducts({ tags });
     
-        res.status(200).json({
-            data: products,
-            message: 'products listed'
-        });
+        // res.status(200).json({
+        //     data: products,
+        //     message: 'products listed'
+        // });
+        res.status(200).json( products );
     } catch (error) {
         next(error);
     }
@@ -26,10 +27,7 @@ router.get('/:id', async function(req, res, next){
     try {
         const product = await productService.getProduct({ id });
         
-        res.status(200).json({
-            data: product,
-            message: 'product retrieved'
-        });
+        res.status(200).json( product );
     } catch (error) {
         next(error);
     }
